@@ -19,6 +19,10 @@ class LoginActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
+        if (mAuth.currentUser != null) {
+            goToHome()
+        }
+
         btnNovaConta.setOnClickListener {
             showRegisterScreen()
         }
