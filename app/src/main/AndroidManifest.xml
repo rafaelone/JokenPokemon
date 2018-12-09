@@ -21,7 +21,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".JogarActivity" />
         <activity android:name=".RankActivity" />
-        <activity android:name=".Sobre" />
+        <activity android:name=".SobreActivity" />
         <activity android:name=".GameOverActivity"></activity>
     </application>
 

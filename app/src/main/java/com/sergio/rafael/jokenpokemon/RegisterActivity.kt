@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.sergio.rafael.jokenpokemon.model.User
 import kotlinx.android.synthetic.main.activity_register.*
@@ -38,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun saveInRealTimeDataBase(){
-        val user = User(edEmail.text.toString(), edNome.text.toString(), edNick.text.toString(), edSenha.text.toString())
+        val user = User(edEmail.text.toString(), etNomeJogador.text.toString(), edNick.text.toString(), edSenha.text.toString())
         FirebaseDatabase.getInstance().getReference("Users")
                 .child(FirebaseAuth.getInstance().currentUser!!.uid)
                 .setValue(user)

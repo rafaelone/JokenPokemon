@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Retrofit<T> {
 
-    fun getClient(c: Class<T>): T {
+    fun getPokemon(c: Class<T>): T {
         val retrofit = Retrofit.Builder()
                 .client(getOkhttpClientAuth().build())
                 .baseUrl("https://gamestjd.herokuapp.com/jokenpokemon/")
@@ -30,5 +30,5 @@ fun getOkhttpClientAuth(): OkHttpClient.Builder{
 }
 
 fun getPokemonApi(): ApiPokemon {
-    return Retrofit<ApiPokemon>().getClient(ApiPokemon::class.java)
+    return Retrofit<ApiPokemon>().getPokemon(ApiPokemon::class.java)
 }

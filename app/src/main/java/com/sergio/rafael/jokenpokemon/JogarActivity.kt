@@ -16,6 +16,8 @@ class JogarActivity : AppCompatActivity() {
     val AGUA = 2
     val PLANTA = 3
     var rodada = 0
+    var pontuacaoJogador = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,6 +106,7 @@ class JogarActivity : AppCompatActivity() {
         var soma = resultUsuario.text.toString().toInt() +2
         resultUsuario.text = soma.toString()
         rodada = rodada +1
+        pontuacaoJogador = soma
         Log.i("rodada", ": "+ rodada)
         if(rodada > 10){
             gameOver()
@@ -132,6 +135,7 @@ class JogarActivity : AppCompatActivity() {
 
     private fun gameOver(){
        var intent = Intent(this, GameOverActivity::class.java)
+        intent.putExtra("PONTUACAO", pontuacaoJogador)
         startActivity(intent)
         finish()
     }
