@@ -1,5 +1,6 @@
 package com.sergio.rafael.jokenpokemon
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -11,53 +12,129 @@ import java.util.*
 
 class JogarActivity : AppCompatActivity() {
 
+    val FOGO = 1
+    val AGUA = 2
+    val PLANTA = 3
+    var rodada = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jogar)
+
 
         jogador()
     }
 
     private fun jogador(){
-        ivBulba.setOnClickListener {
-          ivVoce.setImageResource(R.drawable.bulbasaur)
-            shorImage()
-        }
         ivChar.setOnClickListener {
             ivVoce.setImageResource(R.drawable.charmander)
-            shorImage()
+            sortearImagem(FOGO)
         }
+
         ivSqui.setOnClickListener {
             ivVoce.setImageResource(R.drawable.squirtle)
-            shorImage()
+            sortearImagem(AGUA)
         }
+
+        ivBulba.setOnClickListener {
+          ivVoce.setImageResource(R.drawable.bulbasaur)
+            sortearImagem(PLANTA)
+        }
+
 
     }
 
-    private fun shorImage(){
-       var images = arrayOf(R.drawable.bulbasaur, R.drawable.charmander, R.drawable.squirtle)
-        var r = Random()
-        var n = r.nextInt(3)
-        val Escolhacharmander = ivVoce.resources.getResourceEntryName(R.drawable.charmander)
-        val Escolhabulba = ivVoce.resources.getResourceEntryName(R.drawable.bulbasaur)
-        val Escolhasquirtle = ivVoce.resources.getResourceEntryName(R.drawable.squirtle)
+    private fun sortearImagem(jogador: Int){
+        var aleatorio = Random()
+        var jogadaPc = aleatorio.nextInt(3)+1
+        Log.i("sorteio pc: " ,"" +jogadaPc)
 
-        when(images[n]) {
+        when(jogadaPc){
+            FOGO->{
 
-            R.drawable.bulbasaur -> {
-                if(Escolhacharmander == "charmander"){
-                    resultuUsuario.text.toString().toInt() +1
-                    etResultado.text = "Voce ganhou"
-                }else if (Escolhabulba == "bulbasaur"){
-                    etResultado.text = "Empate"
+                ivComputador.setImageResource(R.drawable.charmander)
+                when(jogador){
+                    FOGO->{
+                        empate()
+                    }
+                    AGUA->{
+                        vitoria()
+                    }
+                    PLANTA->{
+                        derrota()
+                    }
                 }
-
             }
-
-            R.drawable.squirtle -> {}
-            R.drawable.charmander -> {}
+            AGUA->{
+                ivComputador.setImageResource(R.drawable.squirtle)
+                when(jogador){
+                    FOGO->{
+                       derrota()
+                    }
+                    AGUA->{
+                        empate()
+                    }
+                    PLANTA->{
+                       vitoria()
+                    }
+                }
+            }
+            PLANTA->{
+                ivComputador.setImageResource(R.drawable.bulbasaur)
+                when(jogador){
+                    FOGO->{
+                        vitoria()
+                    }
+                    AGUA->{
+                        derrota()
+                    }
+                    PLANTA->{
+                        empate()
+                    }
+                }
+            }
         }
-        ivComputador.setImageResource(images[n])
+
 
     }
+
+    private fun vitoria(){
+        etResultado.text = "Você ganhou"
+        var soma = resultUsuario.text.toString().toInt() +2
+        resultUsuario.text = soma.toString()
+        rodada = rodada +1
+        Log.i("rodada", ": "+ rodada)
+        if(rodada > 10){
+            gameOver()
+        }
+    }
+
+    private fun derrota(){
+        etResultado.text = "Você perdeu"
+        var soma = resultPc.text.toString().toInt() + 2
+        resultPc.text = soma.toString()
+        rodada = rodada +1
+        if(rodada > 10){
+            gameOver()
+        }
+
+    }
+
+    private fun empate(){
+        etResultado.text = "Empatou"
+        rodada = rodada +1
+        if(rodada > 10){
+            gameOver()
+        }
+
+    }
+
+    private fun gameOver(){
+       var intent = Intent(this, GameOverActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
 }

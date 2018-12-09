@@ -14,11 +14,20 @@ class MainActivity : AppCompatActivity() {
         btnJogar.setOnClickListener {
             showPlay()
         }
+
+        btnRank.setOnClickListener {
+            showRank()
+        }
     }
 
 
     private fun showPlay(){
         val intent = Intent(this, JogarActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showRank(){
+        val intent = Intent(this, RankActivity::class.java)
         startActivity(intent)
     }
 }
